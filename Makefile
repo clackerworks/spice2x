@@ -14,7 +14,7 @@ spice.o: spice.f
 	$(FC) -c $(FFLAGS) spice.f -o spice.o 
 
 unix.o: unix.c
-	$(CC) $(CFLAGS) -c unix.c -o unix.o
+	$(CC) $(CFLAGS) -std=gnu89 -c unix.c -o unix.o
 
 clean:
 	rm -f $(OBJS) spice
