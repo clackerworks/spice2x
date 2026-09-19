@@ -1,0 +1,4 @@
+*.o
+/spice
+.aide/
+.aide-repo-map
