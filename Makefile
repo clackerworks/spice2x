@@ -7,7 +7,10 @@ ENGINE_SRCS = engine/matrix.f engine/dcop.f engine/devices.f engine/mosfet.f \
 	engine/poly.f engine/acanal.f engine/disto.f
 ENGINE_OBJS = $(ENGINE_SRCS:.f=.o)
 
-OBJS = spice_main.o ui/spice_ui.o $(ENGINE_OBJS) spice_memmgr.o unix.o
+UI_SRCS = ui/control.f ui/readin.f ui/card.f ui/chk.f ui/print.f ui/plot.f
+UI_OBJS = $(UI_SRCS:.f=.o)
+
+OBJS = spice_main.o $(UI_OBJS) $(ENGINE_OBJS) spice_memmgr.o unix.o
 
 all: spice
 
@@ -17,7 +20,7 @@ spice: $(OBJS)
 spice_main.o: spice_main.f
 	$(FC) -c $(FFLAGS) spice_main.f -o spice_main.o
 
-ui/spice_ui.o: ui/spice_ui.f
+ui/%.o: ui/%.f
 	$(FC) -c $(FFLAGS) $< -o $@
 
 engine/%.o: engine/%.f
