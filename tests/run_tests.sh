@@ -16,8 +16,9 @@ trap 'rm -rf "$WORK"' EXIT
 
 ENGINE_SRCS="engine/matrix.f engine/dcop.f engine/devices.f engine/mosfet.f
     engine/poly.f engine/acanal.f engine/disto.f"
+UI_SRCS="ui/control.f ui/readin.f ui/card.f ui/chk.f ui/print.f ui/plot.f"
 
-echo "== building spice_memmgr.o, engine/*.o, spice_ui.o and unix.o =="
+echo "== building spice_memmgr.o, engine/*.o, ui/*.o and unix.o =="
 "$FC" -c $FFLAGS spice_memmgr.f -o "$WORK/spice_memmgr.o"
 ENGINE_OBJS=""
 for SRC in $ENGINE_SRCS; do
@@ -25,7 +26,12 @@ for SRC in $ENGINE_SRCS; do
     "$FC" -c $FFLAGS "$SRC" -o "$OBJ"
     ENGINE_OBJS="$ENGINE_OBJS $OBJ"
 done
-"$FC" -c $FFLAGS ui/spice_ui.f -o "$WORK/ui_spice_ui.o"
+UI_OBJS=""
+for SRC in $UI_SRCS; do
+    OBJ="$WORK/$(basename "$SRC" .f).o"
+    "$FC" -c $FFLAGS "$SRC" -o "$OBJ"
+    UI_OBJS="$UI_OBJS $OBJ"
+done
 "$CC" -c $CFLAGS unix.c -o "$WORK/unix.o"
 
 STATUS=0
