@@ -25,7 +25,7 @@ for SRC in $ENGINE_SRCS; do
     "$FC" -c $FFLAGS "$SRC" -o "$OBJ"
     ENGINE_OBJS="$ENGINE_OBJS $OBJ"
 done
-"$FC" -c $FFLAGS spice_ui.f -o "$WORK/spice_ui.o"
+"$FC" -c $FFLAGS ui/spice_ui.f -o "$WORK/ui_spice_ui.o"
 "$CC" -c $CFLAGS unix.c -o "$WORK/unix.o"
 
 STATUS=0
@@ -42,7 +42,7 @@ fi
 echo
 echo "== engine test suite =="
 "$FC" -c $FFLAGS tests/test_engine.f -o "$WORK/test_engine.o"
-"$FC" "$WORK/test_engine.o" $ENGINE_OBJS "$WORK/spice_ui.o" \
+"$FC" "$WORK/test_engine.o" $ENGINE_OBJS "$WORK/ui_spice_ui.o" \
     "$WORK/spice_memmgr.o" "$WORK/unix.o" -o "$WORK/test_engine"
 if ! "$WORK/test_engine"; then
     echo "== engine test suite FAILED =="
